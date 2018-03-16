@@ -2,6 +2,9 @@
 
 This practical looks at simple versions of commonly used patterns for moving between objects and database tables
 
+* Download the files in the repository. 
+* Change the connection settings in *dbconnect.php* so they work with your database.
+
 ## Active Record
 * From the ActiveRecord folder open *index.php*. Make sure it works. It should display the details for the film with an id of 10. 
 * Have a good look through the code, try and understand what is happening. 

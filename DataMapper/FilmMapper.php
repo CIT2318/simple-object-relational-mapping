@@ -22,36 +22,6 @@ class FilmMapper{
 		$stmt->execute();
 		$film->id = $conn->lastInsertId();
 	}
-	function update($film){
-		$conn = DbConnect::getConnection();
-		$query="UPDATE films SET title=:title, year=:year, duration=:duration WHERE id=:id";
-		$stmt=$conn->prepare($query);
-		$stmt->bindValue(':id', $film->id);
-		$stmt->bindValue(':title', $film->title);
-		$stmt->bindValue(':year', $film->year);
-		$stmt->bindValue(':duration', $film->duration);
-		$stmt->execute();
-	}
-
-	function delete($film){
-		$conn = DbConnect::getConnection();
-		$stmt = $conn->prepare("DELETE FROM films WHERE films.id = :id");
-		$stmt->bindValue(':id',$film->id);
-		$stmt->execute();
-	}
-
-	function getAllFilms()
-	{
-		$conn = DbConnect::getConnection();
-		$query = "SELECT * FROM films";
-		$resultset = $conn->query($query);
-		$films=[];
-		while($row = $resultset->fetch()){
-			$filmObject = $this->makeFilmObject($row);
-			$films[] = $filmObject;
-		}
-		return $films;
-	}
 
 	private function makeFilmObject($row)
 	{
