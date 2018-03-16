@@ -56,8 +56,6 @@ class Film{
 		$stmt->bindValue(':id',$id);
 		$stmt->execute();
 		$row = $stmt->fetch();
-		// $filmObject = new Film($row["title"], $row["year"], $row["duration"]);
-		// $filmObject->id=$row["id"];
 		$filmObject = Film::makeFilmObject($row);
 		return $filmObject;
 	}
@@ -69,8 +67,6 @@ class Film{
 		$resultset = $conn->query($query);
 		$films=[];
 		while($row = $resultset->fetch()){
-			// $filmObject = new Film($row["title"], $row["year"], $row["duration"]);
-			// $filmObject->id=$row["id"];
 			$filmObject = Film::makeFilmObject($row);
 			$films[] = $filmObject;
 		}
