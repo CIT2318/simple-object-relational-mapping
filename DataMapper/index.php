@@ -1,5 +1,5 @@
 <?php
-require_once("dbconnect.php");
+require_once("../dbconnect.php");
 require_once("Film.php");
 require_once("FilmMapper.php");
 

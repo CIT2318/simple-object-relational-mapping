@@ -1,11 +1,11 @@
 <?php
-require_once("dbconnect.php");
+require_once("../dbconnect.php");
 require_once("Film.php");
 
 
 //get one film
-// $film=Film::find(10);
-// echo "<p>".$film->title." is ".$film->getAge()." years old</p>";
+$film=Film::find(10);
+echo "<p>".$film->title." is ".$film->getAge()." years old</p>";
 
 //save
 // $film = new Film("Arrival", "2016", 116);
