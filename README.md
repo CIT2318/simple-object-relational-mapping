@@ -2,7 +2,7 @@
 
 This practical looks at simple versions of commonly used patterns for moving between objects and database tables
 
-* Open *oop-inheritance-notes* in a browser. The notes will help you answer the questions.
+* Open *orm-notes* in a browser. The notes will help you answer the questions.
 * Download the files in the repository. 
 * Change the connection settings in *dbconnect.php* so they work with your database.
 
