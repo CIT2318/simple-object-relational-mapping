@@ -6,8 +6,8 @@ Previously when working with a database using
 ```php
 $query = "SELECT * FROM films WHERE films.id=2";
 $resultset = $conn->query($query);
-$film=$resultset->fetch(); 
-print_r($film);//['id'=> 2 'title' => 'Winter's Bone' 'year' => 2010 'duration' => 100] 
+$film=$resultset->fetch();
+print_r($film);//['id'=> 2 'title' => 'Winter's Bone' 'year' => 2010 'duration' => 100]
 echo $film['title']; //Winter's Bone
 
 ```
@@ -20,7 +20,7 @@ class Film {
     public $title;
     public $year;
     public $duration;
-    
+
     function __construct($title, $year, $duration){
         $this->title=$title;
         $this->year=$year;
@@ -107,11 +107,11 @@ echo "<p>{$film->title} is {$film->getAge()} years old</p>";
 
 ```
 
-Note that the *find()* method is static. 
+* Note that the *find()* method is static.
 
 What is nice about the Active Record pattern is that all the complexity for working with the database is encapsulated in the domain class (in this example Film). It is quite intuitive to call methods such as *save()* and *update()* on the actual object we want to save or update, without having to involve any other objects or functions.
 
-The Active Record pattern is commonly used in MVC frameworks e.g. Laravel, Ruby on Rails to provide ORM e.g. see https://laravel.com/docs/5.7/eloquent for examples that look similar to the above one. 
+The Active Record pattern is commonly used in MVC frameworks e.g. Laravel, Ruby on Rails to provide ORM e.g. see https://laravel.com/docs/eloquent for examples that look similar to the above one. 
 
 There are also disadvantages to the Active record pattern. It tends to make our domain classes large and overly complex. One of the key principles of OOP is the 'single responsibility principle'. Each class should be responsible for a single part of the application’s functionality
 (https://en.wikipedia.org/wiki/Single_responsibility_principle). The Active Record pattern gives domain classes too much responsibility.
@@ -120,7 +120,7 @@ There are also disadvantages to the Active record pattern. It tends to make our 
 
 An alternative design pattern for database interaction is the data mapper pattern:
 
-*[A mapper ] moves data between objects and a database while keeping them independent of each other* (http://martinfowler.com/eaaCatalog/dataMapper.html) 
+*[A mapper ] moves data between objects and a database while keeping them independent of each other* (http://martinfowler.com/eaaCatalog/dataMapper.html)
 
 The mapper class is responsible for working with the database - insert, delete etc. Domain objects don’t need any knowledge of the database. Again here's a simple example:
 
@@ -168,13 +168,13 @@ $film = $filmMapper->find(8); //gets the film with id of 8
 echo "<p>{$film->title} is {$film->getAge()} years old</p>";
 ```
 
-The DataMapper pattern isn't quite as neat to use as the Active Record pattern, but it has the advantages that we keep the database related code separate. 
+The DataMapper pattern isn't quite as neat to use as the Active Record pattern, but it has the advantages that we keep the database related code separate.
 
 ## Associations between classes
-We know how to implement relationships between classes in a database i.e foreign keys, junction tables etc. How do we do this in PHP code? 
+We know how to implement relationships between classes in a database i.e foreign keys, junction tables etc. How do we do this in PHP code?
 
 ### One-to-many relationships
-In our example, there is a one-to-many relationship between Certificate and Film. To implement this in PHP: 
+In our example, there is a one-to-many relationship between Certificate and Film. To implement this in PHP:
 
 First we need a Certificate class
 ```php
@@ -182,7 +182,7 @@ class Certificate {
     public $name;
     public $description;
     public $image;
-    
+
     function __construct($name, $description, $image){
         $this->name=$name;
         $this->description=$description;
@@ -204,7 +204,7 @@ class Film {
         $this->title=$title;
         $this->year=$year;
         $this->duration=$duration;
-        $this->certificate=$certificate; 
+        $this->certificate=$certificate;
     }
 
     function getAge(){
@@ -212,11 +212,11 @@ class Film {
         $currentYear = $todaysDate->format("Y");
         return $currentYear-$this->year;
     }
-    
+
 }
 ```
 
-When we create Film objects, first we need to create a Certificate object and then we need to specify the certificate as a property of the film e.g. 
+When we create Film objects, first we need to create a Certificate object and then we need to specify the certificate as a property of the film e.g.
 
 ```php
 $cert = new Certificate("12a", "12a films contain...", "12a.png");
@@ -232,9 +232,9 @@ echo "{$film->title} has a certificate of {$film->certificate->name}";
 ```
 
 ### Many-to-many relationships
-Sticking with the film example there is a many-to-many relationship between Film and Genre i.e. a film belongs to many genres and a genre is associated with many different films. 
+Sticking with the film example there is a many-to-many relationship between Film and Genre i.e. a film belongs to many genres and a genre is associated with many different films.
 
-We need to associate a Film object with multiple Genre objects. We do this using an array. 
+We need to associate a Film object with multiple Genre objects. We do this using an array.
 
 Here's a simple Genre class:
 ```php
@@ -256,7 +256,7 @@ class Film {
     public $title;
     public $year;
     public $duration;
-    public $certificate; 
+    public $certificate;
     public $genres;//new genres property
 
 
@@ -264,7 +264,7 @@ class Film {
         $this->title=$title;
         $this->year=$year;
         $this->duration=$duration;
-        $this->certificate=$certificate; 
+        $this->certificate=$certificate;
         $this->genres=[]; //declare $genres as an empty array
     }
 
@@ -282,10 +282,10 @@ class Film {
             array_splice($this->genres, $index, 1); //remove the genre from the array
         }
     }
-    
+
 }
 ```
-We can now associate genres with films 
+We can now associate genres with films
 
 ```php
 
@@ -335,20 +335,20 @@ class FilmMapper{
         //get the certificate
         $certMapper = new CertificateMapper();
         $certificateObject = $certMapper->find($row["certificate_id"]);
-        
+
         //make a film object
         $filmObject = new Film($row["title"], $row["year"], $row["duration"], $certificate);
         return $filmObject;
     }
 }
 ```
-When retrieving data from the database we need to use a CertificateMapper to get hold of a certificate object. When saving the Film we use certificate id as a foreign key. 
+When retrieving data from the database we need to use a CertificateMapper to get hold of a certificate object. When saving the Film we use certificate id as a foreign key.
 
 ### ORM is complex
-As soon as we start thinking about associations, ORM becomes complex. We need separate mappers for each domain class - GenreMapper, CertificateMapper etc. The above only considers unidirectional relationships e.g. we haven't thought how Genre objects can store their associated films. 
+As soon as we start thinking about associations, ORM becomes complex. We need separate mappers for each domain class - GenreMapper, CertificateMapper etc. The above only considers unidirectional relationships e.g. we haven't thought how Genre objects can store their associated films.
 
-It is usually easier to use an 'off the shelf' solution. There are PHP libraries that will handle Object Relational Mapping for us 
+It is usually easier to use an 'off the shelf' solution. There are PHP libraries that will handle Object Relational Mapping for us
 E.g. Doctrine http://www.doctrine-project.org/ . Most MVC frameworks provide ORM
-E.g. in Laravel – Eloquent ORM https://laravel.com/docs/5.7/eloquent .
+E.g. in Laravel – Eloquent ORM https://laravel.com/docs/eloquent .
 
-However, having some hands-on experience of ORM  is useful as you can then grasp what libraries and frameworks are actually doing. 
+However, having some hands-on experience of ORM  is useful as you can then grasp what libraries and frameworks are actually doing.
