@@ -47,7 +47,7 @@ echo "<p>{$filmObject->title} is {$filmObject->getAge()} years old</p>"; //Winte
 ```
 
 ## Design Patterns for ORM
-There are a number of commonly used desing patterns for Object Relational Mapping
+There are a number of commonly used design patterns for Object Relational Mapping
 
 ### Active Record
 The active record pattern (http://www.martinfowler.com/eaaCatalog/activeRecord.html) makes domain classes responsible for working with the database. Here's what a Film class might look like:
