@@ -345,10 +345,10 @@ class FilmMapper{
 When retrieving data from the database we need to use a CertificateMapper to get hold of a certificate object. When saving the Film we use certificate id as a foreign key. 
 
 ### ORM is complex
-As soon as we start thinking about associations ORM becomes complex. We need separate mappers for each domain class GenreMapper, CertificateMapper etc. The above only considers unidirectional relationships e.g. we haven't thought how Genre objects can store their associated film. 
+As soon as we start thinking about associations, ORM becomes complex. We need separate mappers for each domain class - GenreMapper, CertificateMapper etc. The above only considers unidirectional relationships e.g. we haven't thought how Genre objects can store their associated films. 
 
 It is usually easier to use an 'off the shelf' solution. There are PHP libraries that will handle Object Relational Mapping for us 
 E.g. Doctrine http://www.doctrine-project.org/ . Most MVC frameworks provide ORM
 E.g. in Laravel – Eloquent ORM https://laravel.com/docs/5.7/eloquent .
 
-How having some hands-on experience of ORM mapping is useful as you can then grasp what libraries and frameowkrs are actually doing. 
+However, having some hands-on experience of ORM  is useful as you can then grasp what libraries and frameworks are actually doing. 
